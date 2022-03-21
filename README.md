@@ -1,9 +1,11 @@
 # Slim 4 + Respect/Validation + Illuminate/Translation example
 Пример реализации перевода сообщений Respect/Validation на русский язык с использованием Illuminate/Translation.
+
 *An example of Respect/Validation messages translation into Russian using Illuminate/Translation.*
 
 Перевод содержится в файле *The translation is contained in the file*:
-**./resources/lang/ru/respect-validation.php**
+
+    ./resources/lang/ru/respect-validation.php
 
 ## composer - install dependencies
     composer install
@@ -13,9 +15,12 @@
     php -S localhost:8000 -t public
 
 ## api-request example 1
-POST http://localhost:8000/user/register
+**Request method: POST**
+
+    http://localhost:8000/user/register
 
 **Wrong JSON Body:**
+
     {
       "name": "test",
       "email": "test@test.com",
@@ -33,6 +38,7 @@ POST http://localhost:8000/user/register
     }
 
 **Expected result with status code 422:**
+
     {
       "message": {
         "name": "name уже используется другим пользователем",
@@ -45,6 +51,7 @@ POST http://localhost:8000/user/register
     }
 
 **Correct JSON body:**
+
     {
       "name": "test1",
       "email": "test1@test.com",
@@ -62,6 +69,7 @@ POST http://localhost:8000/user/register
     }
 
 **Expected result with status code 200:**
+
     {
       "name": "test1",
       "email": "test1@test.com",
@@ -78,9 +86,12 @@ POST http://localhost:8000/user/register
     }
 
 ## api-request example 2
-PUT http://localhost:8000/user/profile
+**Request method: PUT**
+
+    http://localhost:8000/user/profile
 
 **Wrong JSON Body:**
+
     {
       "name": "test",
       "email": "test@test.com",
@@ -91,6 +102,7 @@ PUT http://localhost:8000/user/profile
     }
 
 **Expected result with status code 422:**
+
     {
       "message": {
         "name": "name уже используется другим пользователем",
@@ -101,6 +113,7 @@ PUT http://localhost:8000/user/profile
     }
 
 **Correct JSON body:**
+
     {
       "name": "test1",
       "email": "test1@test.com",
@@ -112,6 +125,7 @@ PUT http://localhost:8000/user/profile
     }
 
 **Expected result with status code 200:**
+
     {
       "name": "test1",
       "email": "test1@test.com",
@@ -122,9 +136,12 @@ PUT http://localhost:8000/user/profile
     }
 
 ## api-request example 3
-GET http://localhost:8000/split-time-calc
+**Request method: GET**
+
+    http://localhost:8000/split-time-calc
 
 **Wrong JSON Body:**
+
     {
       "measure": 4,
       "timeHours": 25,
@@ -152,6 +169,7 @@ GET http://localhost:8000/split-time-calc
     }
 
 **Expected result with status code 422:**
+
     {
       "message": {
         "id": "id должно присутствовать",
