@@ -38,4 +38,24 @@ class UserRequest extends BaseRequest
 
     return $validator;
   }
+
+  protected function validated(array $params): array
+  {
+    // for example add 'password_hash' param here
+    if (isset($params['password'])) {
+      $params['password_hash'] = password_hash($params['password'], PASSWORD_BCRYPT);
+
+      // $params['password'] = password_hash($params['password'], PASSWORD_BCRYPT);
+
+      unset($params['password_confirmation']);
+      unset($params['captcha_value']);
+    }
+
+    // or we can remove some parameters
+    if (isset($params['oldPassword'])) {
+      unset($params['oldPassword']);
+    }
+
+    return $params;
+  }
 }

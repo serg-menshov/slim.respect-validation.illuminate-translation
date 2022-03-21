@@ -14,8 +14,17 @@ abstract class BaseRequest
 {
   abstract protected function rules(array $params): v;
 
+  /**
+   * you can override this method to return additional parameters
+   */
+  protected function validated(array $params): array
+  {
+    return $params;
+  }
+
   public function __invoke(Request $request, RequestHandler $handler): Response
   {
+    // get not validated request parameters
     $params = json_decode((string)$request->getBody(), true);
 
     try {
@@ -29,7 +38,8 @@ abstract class BaseRequest
         ->withStatus(422);
     }
 
-    $request = $request->withAttribute('validated', $params);
+    // set validated parameters to read using Request method getAttribute('validated')
+    $request = $request->withAttribute('validated', $this->validated($params));
 
     return $handler->handle($request);
   }

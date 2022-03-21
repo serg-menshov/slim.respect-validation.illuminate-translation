@@ -20,19 +20,17 @@ Factory::setDefaultInstance(
   (new Factory())
     ->withRuleNamespace('App\\Validation\\Rules')
     ->withExceptionNamespace('App\\Validation\\Exceptions')
-    ->withTranslator('respectValidatorCustomTranslator')
+    ->withTranslator(
+      function (string $original) use ($translator): string {
+        $source = 'respect-validation.';
+        $translated = $translator->get($source . $original);
+        if (strpos($translated, $source) === 0) { // str_starts_with in PHP8
+          return $original;
+        }
+        return $translated;
+      }
+    )
 );
-
-function respectValidatorCustomTranslator(string $msg): string
-{
-  global $translator;
-  $source = 'respect-validation.';
-  $message = $translator->get($source . $msg);
-  if (strpos($message, $source) === 0) {
-    $message = substr($message, strlen($source));
-  }
-  return $message;
-}
 
 // create slim app
 $app = AppFactory::create();
