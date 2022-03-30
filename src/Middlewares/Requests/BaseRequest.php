@@ -25,7 +25,7 @@ abstract class BaseRequest
   public function __invoke(Request $request, RequestHandler $handler): Response
   {
     // get not validated request parameters
-    $params = json_decode((string)$request->getBody(), true);
+    $params = json_decode((string)$request->getBody(), true) ?? [];
 
     try {
       $this->rules($params)->assert($params);
